@@ -1,2 +1,0 @@
-Posibles cambios, separar los AMB, o cambiarlos en Adm Categoria/Grupo, y separar luego en Agregar, Eliminar, Ver,
-en Ver extender Compartir Recurso (tambien sacar una directa del Usuario) de ahi extender la asignación de categoría y palabras clave
