@@ -26,10 +26,15 @@ def register():
             error = 'User {} is already registered.'.format(username)
 
         if error is None:
-            db.session.add(User(username='gian_nativo', password='123456'))
+            db.session.add(User(username=username, password=password))
             db.session.commit()
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('auth.register_succesful'))
 
         flash(error)
 
     return render_template('register.html')
+
+
+@bp.route('/register_succesful')
+def register_succesful():
+    return render_template('register_success.html')
