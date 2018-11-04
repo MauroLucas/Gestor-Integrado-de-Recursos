@@ -1,19 +1,14 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template, Blueprint
 from . import auth
 from flask_sqlalchemy import SQLAlchemy
+from config import app_setup
 
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-    )
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/bd_gir'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db = SQLAlchemy(app)
+    app = app_setup()
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -31,8 +26,8 @@ def create_app(test_config=None):
     app.register_blueprint(auth.bp)
 
     # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    @app.route('/')
+    def home():
+        return render_template('home.html')
 
     return app
