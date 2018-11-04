@@ -10,5 +10,4 @@ def app_setup():
     )
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/bd_gir'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.add_url_rule('/', 'app.home')
     return app

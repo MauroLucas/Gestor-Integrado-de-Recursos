@@ -6,6 +6,14 @@ from flask_sqlalchemy import SQLAlchemy
 from config import app_setup
 
 
+bp = Blueprint('main', __name__, url_prefix='/')
+
+
+@bp.route('/')
+def home():
+    return render_template('home.html')
+
+
 def create_app(test_config=None):
     # create and configure the app
     app = app_setup()
@@ -24,10 +32,6 @@ def create_app(test_config=None):
         pass
 
     app.register_blueprint(auth.bp)
-
-    # a simple page that says hello
-    @app.route('/')
-    def home():
-        return render_template('home.html')
+    app.register_blueprint(bp)
 
     return app
