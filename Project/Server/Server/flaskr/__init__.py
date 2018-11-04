@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, Blueprint
 from . import auth
 from flask_sqlalchemy import SQLAlchemy
-from config import app_setup
+from config import AppSetup
 
 
 bp = Blueprint('main', __name__, url_prefix='/')
@@ -16,7 +16,7 @@ def home():
 
 def create_app(test_config=None):
     # create and configure the app
-    app = app_setup()
+    app = AppSetup().get_app()
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
