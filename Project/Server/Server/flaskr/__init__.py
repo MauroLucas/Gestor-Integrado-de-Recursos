@@ -1,8 +1,15 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template, Blueprint
 from . import auth
 from flask_sqlalchemy import SQLAlchemy
+
+bp = Blueprint('main', __name__, url_prefix='/')
+
+
+@bp.route('/')
+def home():
+    return render_template('home.html')
 
 
 def create_app(test_config=None):
@@ -30,9 +37,7 @@ def create_app(test_config=None):
 
     app.register_blueprint(auth.bp)
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(bp)
 
     return app
