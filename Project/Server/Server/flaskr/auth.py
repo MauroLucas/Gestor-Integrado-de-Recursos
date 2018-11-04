@@ -3,6 +3,7 @@ import functools
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from base import db
 from base import User
@@ -28,6 +29,7 @@ def register():
             db.session.add(User(username=username, password=password))
             db.session.commit()
             return redirect(url_for('auth.register_succesful'))
+
         flash(error)
 
     return render_template('register.html')
@@ -61,4 +63,4 @@ def login():
 
 @bp.route('/register_succesful')
 def register_succesful():
-    return render_template('register_success.html', {'message': 'User registered!'})
+    return render_template('register_success.html')

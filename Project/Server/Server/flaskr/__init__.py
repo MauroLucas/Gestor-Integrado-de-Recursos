@@ -36,6 +36,8 @@ def create_app(test_config=None):
         pass
 
     app.register_blueprint(auth.bp)
+
+    app.register_blueprint(auth.bp)
     app.register_blueprint(bp)
 
     return app
