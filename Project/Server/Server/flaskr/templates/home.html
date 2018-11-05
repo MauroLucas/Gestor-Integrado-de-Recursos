@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
 </head>
 <body>
 <p>Gestor Integrado de Recursos</p>
-<a href="{{ url_for('auth.login') }}">Log In</a>
-<a href="{{ url_for('auth.register') }}">Register</a>
+<a href="{{ url_for('auth.login') }}" class="btn btn-primary">Log In</a>
+<a href="{{ url_for('auth.register') }}"class="btn btn-primary">Register</a>
 </body>
 </html>
