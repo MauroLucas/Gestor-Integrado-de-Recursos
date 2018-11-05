@@ -54,6 +54,9 @@ def login():
                 error = 'User or password is not valid.'
 
         if error is None:
+            session.clear ()
+            session["user"] = request.form['username']
+            session["auth"] = 1
             return redirect(url_for('auth.register_succesful'))
 
         flash(error)
@@ -64,13 +67,10 @@ def login():
 @bp.route('/edit', methods=('GET', 'POST'))
 def edit():
     if request.method == 'POST':
-        username = request.form['username']
+        username = session["user"]
         newpw = request.form['newpassword']
         newpw2 = request.form['newpassword2']
         error = None
-
-        if not username:
-            error = 'Username is required.'
 
         if not username:
             error = 'New password is required.'
@@ -90,6 +90,14 @@ def edit():
         flash(error)
 
     return render_template('edit.html')
+
+@bp.route('/logout', methods=('GET', 'POST'))
+def logout():
+    if request.method == 'POST':
+        session.clear ()
+        session["user"] = "unknown"
+        session["auth"] = 0
+    return render_template('home.html')
 
 @bp.route('/register_succesful')
 def register_succesful():
