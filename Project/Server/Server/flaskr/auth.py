@@ -61,6 +61,36 @@ def login():
     return render_template('login.html')
 
 
+@bp.route('/edit', methods=('GET', 'POST'))
+def edit():
+    if request.method == 'POST':
+        username = request.form['username']
+        newpw = request.form['newpassword']
+        newpw2 = request.form['newpassword2']
+        error = None
+
+        if not username:
+            error = 'Username is required.'
+
+        if not username:
+            error = 'New password is required.'
+
+        if not newpw == newpw2:
+            error = 'Password not match'
+
+        elif not db.session.query(User.query.filter(User.username == username).exists()).scalar():
+            error = 'User {} is not registered.'.format(username)
+
+        if error is None:
+            User.query.filter_by (username=username).update (dict (password=newpw))
+            db.session.commit ()
+
+            return redirect(url_for('auth.register_succesful'))
+
+        flash(error)
+
+    return render_template('edit.html')
+
 @bp.route('/register_succesful')
 def register_succesful():
     return render_template('register_success.html')
