@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<p>Login</p>
+<h1><center>Login</center></h1>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <ul class=flashes>
@@ -15,11 +15,27 @@
     </ul>
   {% endif %}
 <form method="post">
-    <input type="text" name="username" placeholder="username">
-    <input type="text" name="password" placeholder="password">
-    <button type="submit">Login</button>
+  <center>
+  <br>
+  <div class="form-group">
+  <label class="col-form-label" for="inputDefault">Username<br><br></label>
+  <input type="text" name="username" class="form-control" placeholder="username" id="inputDefault">
+  </div>
+
+  <br><br>
+
+  <div class="form-group">
+  <label class="col-form-label" for="inputDefault">Password<br><br></label>
+  <input type="text" name="password" class="form-control" placeholder="password" id="inputDefault">
+  </div>
+
+  <br>
+
+  <button type="submit">Login</button><br><br><br><br><br>
+
 </form>
     <a href="{{ url_for('main.home') }}">Back to Home Page</a>
 {% endwith %}
+</center>
 </body>
 </html>

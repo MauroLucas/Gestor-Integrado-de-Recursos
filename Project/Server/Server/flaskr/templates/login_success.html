@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+<h1>Interfaz de inicio</h1>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+<br><br>
+<a href="{{ url_for('auth.enter_resource') }}" class="btn btn-outline-primary">Ingresar recurso</a>
+    <br><br>
+<a href="{{ url_for('auth.create_group') }}"class="btn btn-outline-primary">Crear grupo</a>
+<br><br><br><br><br>
+<a href="{{ url_for('auth.login') }}">Back to Home Page</a>
+{% endwith %}
+</center>
+</body>
+</html>
