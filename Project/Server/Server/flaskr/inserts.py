@@ -1,11 +1,10 @@
 from base import db
-from base import User
+from base import Usuario
 
 db.create_all()
 
-admin = User(username='messi', password='123456')
+admin = Usuario(username='franco', password='789456')
 
 db.session.add(admin)
 db.session.commit()
-
-User.query.all()
+Usuario.query.all()
