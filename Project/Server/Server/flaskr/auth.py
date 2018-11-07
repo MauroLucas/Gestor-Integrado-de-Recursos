@@ -57,12 +57,10 @@ def login():
                 error = 'User or password is not valid.'
 
         if error is None:
-            session['username']=username
-            session['password']=password
+            session['username'] = username
+            session['password'] = password
             return redirect(url_for('auth.login_succesful'))
 
-<<<<<<< Updated upstream
-=======
 
 @bp.route('/edit', methods=('GET', 'POST'))
 def edit():
@@ -81,9 +79,7 @@ def edit():
             User.query.filter_by (username=username).update (dict (password=newpw))
             db.session.commit()
             return redirect(url_for('auth.register_succesful'))
->>>>>>> Stashed changes
         flash(error)
-
     return render_template('login.html')
 
 
@@ -91,9 +87,11 @@ def edit():
 def register_succesful():
     return render_template('register_success.html')
 
+
 @bp.route('/login_succesful')
 def login_succesful():
     return render_template('login_success.html')
+
 
 @bp.route('/enter_resource', methods=('GET', 'POST'))
 def enter_resource():
@@ -101,32 +99,25 @@ def enter_resource():
         resource = request.form['resource']
         description = request.form['description']
         error = None
-
         if not resource:
             error = 'Resource is required.'
-
         if error is None:
             db.session.add(Recurso(recurso=resource, descripcion=description))
             db.session.commit()
             return redirect(url_for('auth.login_succesful'))
         flash(error)
-
-
     return render_template('enter_resource.html')
+
 
 @bp.route('/create_group', methods=('GET', 'POST'))
 def create_group():
-
     if request.method == 'POST':
         group_name=request.form['group_name']
         error = None
-
         if not group_name:
             error = 'Group_name is required.'
-
         if error is None:
-
-            #user =session.query(Usuario).filter_by(name=session['username']).first()
+            # user = session.query(Usuario).filter_by(name=session['username']).first()
             db.session.add(Grupo(nombre=group_name , id_admin=6))
             db.session.commit()
     return render_template('create_group.html')
