@@ -61,6 +61,27 @@ def login():
             session['password']=password
             return redirect(url_for('auth.login_succesful'))
 
+<<<<<<< Updated upstream
+=======
+
+@bp.route('/edit', methods=('GET', 'POST'))
+def edit():
+    if request.method == 'POST':
+        username = session["user"]
+        newpw = request.form['newpassword']
+        newpw2 = request.form['newpassword2']
+        error = None
+        if not newpw:
+            error = 'New password is required.'
+        if not newpw == newpw2:
+            error = 'Password not match'
+        elif not db.session.query(User.query.filter(User.username == username).exists()).scalar():
+            error = 'User {} is not registered.'.format(username)
+        if error is None:
+            User.query.filter_by (username=username).update (dict (password=newpw))
+            db.session.commit()
+            return redirect(url_for('auth.register_succesful'))
+>>>>>>> Stashed changes
         flash(error)
 
     return render_template('login.html')
