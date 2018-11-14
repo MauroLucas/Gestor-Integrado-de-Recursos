@@ -79,7 +79,7 @@ def edit():
             db.session.commit()
             return redirect(url_for('auth.register_succesful'))
         flash(error)
-    return render_template('login.html')
+    return render_template('edit.html')
 
 
 @bp.route('/logout', methods=('GET', 'POST'))
