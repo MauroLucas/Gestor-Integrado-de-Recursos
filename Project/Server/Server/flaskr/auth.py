@@ -2,11 +2,7 @@ from sqlalchemy.sql.expression import func
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
-
-from base import db
-from base import Usuario
-from base import DatosUsuario
-from base import Contacto
+from base import db, Usuario, DatosUsuario, Contacto
 from flask import session
 from base import *
 
@@ -26,7 +22,13 @@ def register():
         elif db.session.query(Usuario.query.filter(Usuario.username == username).exists()).scalar():
             error = 'User {} is already registered.'.format(username)
         if error is None:
-            db.session.add(Usuario(id_datosUsuario=1, username=username, password=password))
+            contacto = Contacto()
+            db.session.add(contacto)
+            db.session.flush()
+            datos_usuario = DatosUsuario(id_contacto=contacto.id_contacto)
+            db.session.add(datos_usuario)
+            db.session.flush()
+            db.session.add(Usuario(id_datosUsuario=datos_usuario.id_datosUsuario, username=username, password=password))
             db.session.commit()
             return redirect(url_for('auth.register_succesful'))
         flash(error)
@@ -50,13 +52,10 @@ def login():
             if user.password != request.form['password']:
                 error = 'User or password is not valid.'
         if error is None:
-            session['username'] = username
-            session['password'] = password
-            return redirect(url_for('auth.login_succesful'))
             session.clear()
-            session["user"] = request.form['username']
+            session["user"] = username
             session["auth"] = 1
-            return redirect(url_for('auth.register_succesful'))
+            return redirect(url_for('auth.login_succesful'))
         flash(error)
     return render_template('login.html')
 
