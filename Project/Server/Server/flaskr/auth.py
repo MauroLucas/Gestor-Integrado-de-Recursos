@@ -68,18 +68,18 @@ def edit():
         newpw = request.form['newpassword']
         newpw2 = request.form['newpassword2']
         error = None
-        if not username:
+        if not newpw:
             error = 'New password is required.'
         if not newpw == newpw2:
             error = 'Password not match'
-        elif not db.session.query(User.query.filter(User.username == username).exists()).scalar():
+        elif not db.session.query(Usuario.query.filter(Usuario.username == username).exists()).scalar():
             error = 'User {} is not registered.'.format(username)
         if error is None:
-            User.query.filter_by (username=username).update (dict (password=newpw))
+            Usuario.query.filter_by(username=username).update(dict(password=newpw))
             db.session.commit()
             return redirect(url_for('auth.register_succesful'))
         flash(error)
-    return render_template('edit.html')
+    return render_template('login.html')
 
 
 @bp.route('/logout', methods=('GET', 'POST'))
@@ -109,7 +109,6 @@ def enter_resource():
         error = None
         if not resource:
             error = 'Resource is required.'
-
         if error is None:
             db.session.add(Recurso(recurso=resource, descripcion=description))
             db.session.commit()
@@ -120,16 +119,12 @@ def enter_resource():
 
 @bp.route('/create_group', methods=('GET', 'POST'))
 def create_group():
-
     if request.method == 'POST':
-        group_name=request.form['group_name']
+        group_name = request.form['group_name']
         error = None
-
         if not group_name:
             error = 'Group_name is required.'
-
         if error is None:
-
             # user = session.query(Usuario).filter_by(name=session['username']).first()
             db.session.add(Grupo(nombre=group_name , id_admin=6))
             db.session.commit()
