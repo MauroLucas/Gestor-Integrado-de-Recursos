@@ -15,15 +15,15 @@ class Usuario(db.Model):
     __tablename__ = 'Usuario'
     # Primary key
     id_usuario = db.Column(db.Integer, primary_key=True)
-    # Foreign key
-    id_datosUsuario = db.Column(db.Integer, db.ForeignKey('DatosUsuario.id_datosUsuario'), nullable=True)
+
+
     # Relationship
     id_usuarios_ = db.relationship('UsuarioXGrupo', backref='UsuarioXGrupo.id_usuario',
                                    primaryjoin='Usuario.id_usuario==UsuarioXGrupo.id_usuario')
     id_usuarios = db.relationship('Grupo')
     id_usuarios_categoria = db.relationship('Categoria')
     # Atributtes
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=True)
     password = db.Column(db.String(120), unique=False, nullable=False)
     nombre = db.Column(db.String(45), unique=False, nullable=False)
     apellido = db.Column(db.String(45), unique=False, nullable=False)
@@ -99,6 +99,7 @@ class Recurso(db.Model):
     descripcion = db.Column(db.String(80), unique=False, nullable=False)
 
 
+
 class CategoriaXRecurso(db.Model):
     __tablename__ = 'CategoriaXRecurso'
     # Primary key
@@ -120,60 +121,4 @@ class Categoria(db.Model):
     nombre = db.Column(db.String(80), unique=False, nullable=False)
 
 
-# INSERTS-----------
-contact = Contacto(movil='1155447788', fijo='41231234', calle='Tacuario', numero='3321')
-date = DatosUsuario(id_contacto=6, nombre='lucas', apellido='ambesi', mail='lucasambesi@hotmail.com')
-admin = Usuario(id_datosUsuario='2', username='lucas', password='12345')
-group = Grupo(nombre='grupo1', id_admin=4)
-integrante = UsuarioXGrupo(id_usuario=5, id_grupo=9)
-comment = Comentario(comentario='link1 + comentario1', id_grupo=9)
-label = Etiqueta(nombre='python')
-category = Categoria(id_usuario=4, nombre='Python')
-resource = Recurso(recurso='http://flask.pocoo.org/', descripcion='Micro-framework para desarrollo web en python')
-recursos = CategoriaXRecurso(id_categoria=1, id_recurso=1)
-etiquetas = RecursoXEtiqueta(id_etiqueta=1, id_recurso=1)
-'''
-db.session.add(contact)
-db.session.commit()
-Contacto.query.all()
 
-db.session.add(date)
-db.session.commit()
-DatosUsuario.query.all()
-
-db.session.add(admin)
-db.session.commit()
-Usuario.query.all()
-
-db.session.add(group)
-db.session.commit()
-Grupo.query.all()
-
-db.session.add(integrante)
-db.session.commit()
-UsuarioXGrupo.query.all()
-
-db.session.add(comment)
-db.session.commit()
-Comentario.query.all()
-
-db.session.add(label)
-db.session.commit()
-Etiqueta.query.all()
-
-db.session.add(category)
-db.session.commit()
-Categoria.query.all()
-
-db.session.add(resource)
-db.session.commit()
-Recurso.query.all()
-
-db.session.add(recursos)
-db.session.commit()
-CategoriaXRecurso.query.all()
-
-db.session.add(etiquetas)
-db.session.commit()
-RecursoXEtiqueta.query.all()
-'''
