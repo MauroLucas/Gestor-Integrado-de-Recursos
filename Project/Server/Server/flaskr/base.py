@@ -9,33 +9,6 @@ app.secret_key = 'clave_secreta'
 db = SQLAlchemy(app)
 
 
-class Contacto(db.Model):
-    __tablename__ = 'Contacto'
-    # Primary key
-    id_contacto = db.Column(db.Integer, primary_key=True)
-    # Foreign key
-    id_contactos = db.relationship('DatosUsuario', backref='DatosUsuario.id_datosUsuario',
-                                   primaryjoin='DatosUsuario.id_contacto==Contacto.id_contacto')
-    # Atributtes
-    movil = db.Column(db.String(80), unique=False, nullable=False)
-    fijo = db.Column(db.String(80), unique=False, nullable=False)
-    calle = db.Column(db.String(80), unique=False, nullable=False)
-    numero = db.Column(db.String(80), unique=False, nullable=False)
-
-
-class DatosUsuario(db.Model):
-    __tablename__ = 'DatosUsuario'
-    # Primary key
-    id_datosUsuario = db.Column(db.Integer, primary_key=True)
-    # Foreign key
-    id_contacto = db.Column(db.Integer, db.ForeignKey('Contacto.id_contacto'), nullable=True)
-    # Relationship
-    id_datosUsuarios = db.relationship('Usuario', backref='Usuario.id_datosUsuario',
-                                       primaryjoin='Usuario.id_datosUsuario==DatosUsuario.id_datosUsuario')
-    # Atributtes
-    nombre = db.Column(db.String(80), unique=False, nullable=False)
-    apellido = db.Column(db.String(80), unique=False, nullable=False)
-    mail = db.Column(db.String(80), unique=False, nullable=False)
 
 
 class Usuario(db.Model):
@@ -52,6 +25,9 @@ class Usuario(db.Model):
     # Atributtes
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), unique=False, nullable=False)
+    nombre = db.Column(db.String(45), unique=False, nullable=False)
+    apellido = db.Column(db.String(45), unique=False, nullable=False)
+    mail = db.Column(db.String(45), unique=False, nullable=False)
 
     def __repr__(self):
         return '<User %r>' % self.username
