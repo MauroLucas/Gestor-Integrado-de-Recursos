@@ -100,20 +100,7 @@ def login_succesful():
     return render_template('login_success.html')
 
 
-@bp.route('/enter_resource', methods=('GET', 'POST'))
-def enter_resource():
-    if request.method == 'POST':
-        resource = request.form['resource']
-        description = request.form['description']
-        error = None
-        if not resource:
-            error = 'Resource is required.'
-        if error is None:
-            db.session.add(Recurso(recurso=resource, descripcion=description))
-            db.session.commit()
-            return redirect(url_for('auth.login_succesful'))
-        flash(error)
-    return render_template('enter_resource.html')
+
 
 
 @bp.route('/create_group', methods=('GET', 'POST'))

@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, render_template, Blueprint
 from . import auth
+from . import ControladorLogin,ControladorRegistrarUsuario,ControladorAgregarRecurso
 from flask_sqlalchemy import SQLAlchemy
 
 bp = Blueprint('main', __name__, url_prefix='/')
@@ -37,7 +38,11 @@ def create_app(test_config=None):
 
     app.register_blueprint(auth.bp)
 
-    app.register_blueprint(auth.bp)
     app.register_blueprint(bp)
+
+    app.register_blueprint(ControladorLogin.urlLogin)
+    app.register_blueprint(ControladorRegistrarUsuario.urlRegistrarUsuario)
+    app.register_blueprint(ControladorAgregarRecurso.urlAgregarRecurso)
+
 
     return app
