@@ -7,7 +7,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/gir
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'clave_secreta'
 db = SQLAlchemy(app)
-
+import datetime
 
 
 
@@ -49,9 +49,9 @@ class Grupo(db.Model):
     # Foreign key
     id_admin = db.Column(db.Integer, db.ForeignKey(Usuario.id_usuario), nullable=True)
     # Relationship
-    id_grupos_ = db.relationship('UsuarioXGrupo', backref='UsuarioXGrupo.id_grupo',
+    id_grupo_ = db.relationship('UsuarioXGrupo', backref='UsuarioXGrupo.id_grupo',
                                  primaryjoin='Grupo.id_grupo==UsuarioXGrupo.id_grupo')
-    id_grupos = db.relationship('Comentario', backref='Cometario.id_comentario',
+    id_comentario = db.relationship('Comentario', backref='Cometario.id_comentario',
                                 primaryjoin='Grupo.id_grupo==Comentario.id_grupo')
     # Atributtes
     nombre = db.Column(db.String(80), unique=False, nullable=False)
@@ -97,6 +97,7 @@ class Recurso(db.Model):
     # Atributtes
     recurso = db.Column(db.String(80), unique=False, nullable=True)
     descripcion = db.Column(db.String(80), unique=False, nullable=False)
+    fecha = db.Column(db.DateTime,unique=False,nullable=True)
 
 
 
