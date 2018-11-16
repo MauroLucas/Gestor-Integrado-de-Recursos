@@ -97,9 +97,7 @@ def register_succesful():
 
 @bp.route('/login_succesful')
 def login_succesful():
-    return render_template('login_success.html')
-
-
+    return render_template('agregarRecurso.html')
 
 
 
