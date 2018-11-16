@@ -89,7 +89,10 @@ def logout():
 
 @bp.route('/login_succesful')
 def login_succesful():
-    return render_template('user_page.html')
+    return render_template('agregarRecurso.html')
+
+
+
 
 
 @bp.route('/create_group', methods=('GET', 'POST'))
