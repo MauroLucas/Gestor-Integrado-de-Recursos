@@ -5,9 +5,13 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
 </head>
-<body>
-<h4>Gestor Integrado de Recursos</h4>
-<a href="{{ url_for('auth.login') }}" class="btn btn-primary">Log In</a>
-<a href="{{ url_for('auth.register') }}"class="btn btn-primary">Register</a>
+<body><center>
+<h1>Gestor integrado de recursos</h1>
+<br><br>
+    <img src="http://systemtec.com.co/helpdesk/_lib/img/usr__NM__menu_img__NM__avatar1.png"width="125" height="125">
+    <br><br>
+<a href="{{ url_for('ControladorLogin.login') }}" class="btn btn-outline-primary">Log In</a>
+    <br><br>
+<a href="{{ url_for('ControladorRegistrarUsuario.register') }}"class="btn btn-outline-primary">Register</a></center>
 </body>
 </html>

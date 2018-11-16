@@ -3,3 +3,6 @@ Project/Server/env/*
 
 
 Project/Server/Server/.idea/*
+
+Project/Server/Server/flaskr/*
+.pyc

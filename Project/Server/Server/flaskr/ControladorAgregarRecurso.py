@@ -8,6 +8,7 @@ from base import *
 
 urlAgregarRecurso = Blueprint('ControladorAgregarRecurso', __name__, url_prefix='/ControladorAgregarRecurso')
 
+
 @urlAgregarRecurso.route('/enter_resource', methods=('GET', 'POST'))
 def enter_resource():
     if request.method == 'POST':
