@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, Blueprint
+from flask import Flask, render_template, Blueprint, session, url_for, redirect
 from . import auth
 from . import ControladorLogin,ControladorRegistrarUsuario,ControladorAgregarRecurso
 from flask_sqlalchemy import SQLAlchemy
@@ -8,8 +8,10 @@ from flask_sqlalchemy import SQLAlchemy
 bp = Blueprint('main', __name__, url_prefix='/')
 
 
-@bp.route('/')
+@bp.route('/home')
 def home():
+    if 'user' in session:
+        return redirect(url_for('auth.login_succesful'))
     return render_template('home.html')
 
 
