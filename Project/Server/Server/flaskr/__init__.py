@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 bp = Blueprint('main', __name__, url_prefix='/')
 
 
-@bp.route('/home')
+@bp.route('/')
 def home():
     if 'user' in session:
         return redirect(url_for('auth.login_succesful'))
