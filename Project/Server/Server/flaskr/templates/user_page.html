@@ -3,13 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
 </head>
-<body><center>
-<h1>Gestor integrado de recursos</h1>
-<br><br>
-    <img src="http://systemtec.com.co/helpdesk/_lib/img/usr__NM__menu_img__NM__avatar1.png"width="125" height="125">
-    <br><br>
+<body>
+<h1><center>Intefaz ingresar recurso</center></h1>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+<form method="post">
+  <center>
+  <br>
+  <div class="form-group">
+      <label class="col-form-label" for="inputDefault">Ingresar recurso<br><br></label>
+      <input type="text" name="resource" class="form-control" placeholder="resource" id="inputDefault">
+    </div>
+    <br>
+   <div class="form-group">
+      <label for="exampleTextarea">Descripcion<br><br></label>
+      <textarea inputmode="True" class="form-control" name="description" id="exampleTextarea" rows="3"></textarea>
+    </div>
 
+    <br>
+  <button type="submit">Submit</button><br><br><br><br><br>
+
+</form>
+    <br><br>
+<a href="{{ url_for('ControladorRegistrarUsuario.register') }}" class="btn btn-outline-primary">Ver Categorias(</a>
+    <br><br>
+<a href="{{ url_for('ControladorRegistrarUsuario.register') }}"class="btn btn-outline-primary">Ver Grupos</a>
+    <br><br>
+<a href="{{ url_for('ControladorRegistrarUsuario.register') }}"class="btn btn-outline-primary">Settings</a>
+    <br><br>
+<a href="{{ url_for('auth.logout') }}"class="btn btn-outline-primary">Logout</a>
+{% endwith %}
+ </center>
 </body>
-</html>
