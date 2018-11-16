@@ -54,6 +54,7 @@ def login():
         if error is None:
             session.clear()
             session["user"] = username
+            session["auth"] = 1
             return redirect(url_for('auth.login_succesful'))
         flash(error)
     return render_template('login.html')
@@ -75,21 +76,33 @@ def edit():
         if error is None:
             Usuario.query.filter_by(username=username).update(dict(password=newpw))
             db.session.commit()
-            return redirect(url_for('auth.login_succesful'))
+            return redirect(url_for('auth.register_succesful'))
         flash(error)
     return render_template('edit.html')
 
 
 @bp.route('/logout', methods=('GET', 'POST'))
 def logout():
-    session.clear()
-    session.pop('user', None)
-    return redirect(url_for('main.home'))
+    if request.method == 'POST':
+        session.clear()
+        session["user"] = "unknown"
+        session["auth"] = 0
+    return render_template('home.html')
+
+
+@bp.route('/register_succesful')
+def register_succesful():
+    return render_template('register_success.html')
 
 
 @bp.route('/login_succesful')
 def login_succesful():
     return render_template('user_page.html')
+
+@bp.route('/resource_succesful')
+def resource_succesful():
+    return render_template('resource_success.html')
+
 
 
 @bp.route('/create_group', methods=('GET', 'POST'))
@@ -101,6 +114,6 @@ def create_group():
             error = 'Group_name is required.'
         if error is None:
             # user = session.query(Usuario).filter_by(name=session['username']).first()
-            db.session.add(Grupo(nombre=group_name, id_admin=6))
+            db.session.add(Grupo(nombre=group_name , id_admin=6))
             db.session.commit()
     return render_template('create_group.html')

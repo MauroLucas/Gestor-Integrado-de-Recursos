@@ -20,6 +20,6 @@ def enter_resource():
         if error is None:
             db.session.add(Recurso(recurso=resource, descripcion=description))
             db.session.commit()
-            return redirect(url_for('auth.login_succesful'))
+            return redirect(url_for('auth.resource_succesful'))
         flash(error)
     return render_template('agregarRecurso.html')

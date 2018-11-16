@@ -2,13 +2,13 @@ import os
 
 from flask import Flask, render_template, Blueprint, session, url_for, redirect
 from . import auth
-from . import ControladorLogin,ControladorRegistrarUsuario,ControladorAgregarRecurso
+from . import ControladorLogin,ControladorRegistrarUsuario,ControladorAgregarRecurso,ControladorEditUsuario
 from flask_sqlalchemy import SQLAlchemy
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
 
-@bp.route('/home')
+@bp.route('/')
 def home():
     if 'user' in session:
         return redirect(url_for('auth.login_succesful'))
@@ -21,7 +21,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
     )
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/gir'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:admin@localhost/gir'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db = SQLAlchemy(app)
 
@@ -45,6 +45,7 @@ def create_app(test_config=None):
     app.register_blueprint(ControladorLogin.urlLogin)
     app.register_blueprint(ControladorRegistrarUsuario.urlRegistrarUsuario)
     app.register_blueprint(ControladorAgregarRecurso.urlAgregarRecurso)
+    app.register_blueprint(ControladorEditUsuario.urlEditUsuario)
 
 
     return app
