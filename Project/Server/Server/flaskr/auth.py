@@ -83,11 +83,9 @@ def edit():
 
 @bp.route('/logout', methods=('GET', 'POST'))
 def logout():
-    if request.method == 'POST':
-        session.clear()
-        session["user"] = "unknown"
-        session["auth"] = 0
-    return render_template('home.html')
+    session.clear()
+    session.pop('user', None)
+    return redirect(url_for('main.home'))
 
 
 @bp.route('/register_succesful')
