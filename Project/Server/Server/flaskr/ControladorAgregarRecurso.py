@@ -16,7 +16,10 @@ def enter_resource():
     if request.method == 'POST':
         resource = request.form['resource']
         description = request.form['description']
-        category = request.form['category']
+        if request.form['category_selection'] == 'nueva_categoria':
+            category = request.form['category_input']
+        else:
+            category = request.form['category_selection']
         error = None
         if not resource:
             error = 'Resource is required.'
@@ -37,4 +40,8 @@ def enter_resource():
             db.session.commit()
             return redirect(url_for('auth.login_succesful'))
         flash(error)
-    return render_template('agregarRecurso.html')
+    return render_template('agregarRecurso.html', categorias=get_user_categories(db.session.query(Usuario).filter(Usuario.username == session['user']).one()))
+
+
+def get_user_categories(user):
+    return db.session.query(Categoria).filter(Categoria.id_usuario == user.id_usuario).all()
