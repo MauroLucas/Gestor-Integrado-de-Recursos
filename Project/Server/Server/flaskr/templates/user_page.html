@@ -11,6 +11,12 @@
     <img src="http://systemtec.com.co/helpdesk/_lib/img/usr__NM__menu_img__NM__avatar1.png"width="125" height="125"><br><br>
     <a href="{{ url_for('ControladorAgregarRecurso.enter_resource') }}" class="btn btn-outline-primary">agregar recurso</a>
     <br><br>
-
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
+    <h3>Mis Categorias</h3>
+    <ul></ul>
+    {% for categoria in categorias %}
+        <li>{{ categoria.nombre }}</li>
+    {% endfor %}
+    </ul>
 </body>
 </html>
