@@ -6,20 +6,36 @@ from base import db, Usuario
 from flask import session
 from base import *
 
-urlCrearGrupo = Blueprint('ControladorCrearGrupo', __name__, url_prefix='/ControladorAgregarCrearGrupo')
+urlCrearGrupo = Blueprint('ControladorCrearGrupo', __name__, url_prefix='/ControladorCrearGrupo')
 
 
-@urlCrearGrupo.route('/enter_resource', methods=('GET', 'POST'))
-def enter_resource():
+@urlCrearGrupo.route('/crear_grupo', methods=('GET', 'POST'))
+def crear_grupo():
     if request.method == 'POST':
-        resource = request.form['resource']
-        description = request.form['description']
+        grupo = request.form['grupo']
+
+
         error = None
-        if not resource:
-            error = 'Resource is required.'
+        if not grupo:
+            error = 'Grupo is required.'
+
         if error is None:
-            db.session.add(Recurso(recurso=resource, descripcion=description))
+            user = db.session.query(Usuario).filter(Usuario.username == session['user']).one()
+            grupo1 = Grupo(nombre=grupo, id_admin=user.id_usuario)
+            db.session.add(grupo1)
+            #db.session.flush()
+            #if db.session.query(Categoria.query.filter(Categoria.nombre == category).exists()).scalar():
+                #categoria = db.session.query(Categoria).filter(Categoria.nombre == category).one()
+           # else:
+                #categoria = Categoria(nombre=category, id_usuario=user.id_usuario)
+                #db.session.add(categoria)
+                #db.session.flush()
+            #db.session.add(CategoriaXRecurso(id_recurso=recurso.id_recurso, id_categoria=categoria.id_categoria))
             db.session.commit()
             return redirect(url_for('auth.login_succesful'))
         flash(error)
-    return render_template('agregarRecurso.html')
+    return render_template('agregarGrupo.html')
+
+
+def get_user_categories(user):
+    return db.session.query(Categoria).filter(Categoria.id_usuario == user.id_usuario).all()
