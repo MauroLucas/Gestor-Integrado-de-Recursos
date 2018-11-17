@@ -93,9 +93,6 @@ def login_succesful():
     return render_template('user_page.html', categorias=get_user_categories(user))
 
 
-
-
-
 @bp.route('/create_group', methods=('GET', 'POST'))
 def create_group():
     if request.method == 'POST':

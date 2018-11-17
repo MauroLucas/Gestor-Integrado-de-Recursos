@@ -7,6 +7,7 @@ from flask import session
 from base import *
 import time
 import datetime
+import re
 
 urlAgregarRecurso = Blueprint('ControladorAgregarRecurso', __name__, url_prefix='/ControladorAgregarRecurso')
 
@@ -16,6 +17,7 @@ def enter_resource():
     if request.method == 'POST':
         resource = request.form['resource']
         description = request.form['description']
+        etiquetas = request.form['tags']
         if request.form['category_selection'] == 'nueva_categoria':
             category = request.form['category_input']
         else:
@@ -37,6 +39,17 @@ def enter_resource():
                 db.session.add(categoria)
                 db.session.flush()
             db.session.add(CategoriaXRecurso(id_recurso=recurso.id_recurso, id_categoria=categoria.id_categoria))
+            if etiquetas:
+                pattern = re.compile("^\s+|\s*,\s*|\s+$")
+                etiquetas = [x for x in pattern.split(etiquetas) if x]
+                for tag in etiquetas:
+                    if db.session.query(Etiqueta.query.filter(Etiqueta.nombre == tag).exists()).scalar():
+                        etiqueta = db.session.query(Etiqueta).filter(Etiqueta.nombre == tag).one()
+                    else:
+                        etiqueta = Etiqueta(nombre=tag)
+                        db.session.add(etiqueta)
+                        db.session.flush()
+                    db.session.add(RecursoXEtiqueta(id_etiqueta=etiqueta.id_etiqueta, id_recurso=recurso.id_recurso))
             db.session.commit()
             return redirect(url_for('auth.login_succesful'))
         flash(error)
