@@ -28,6 +28,21 @@
     </div>
 
     <br>
+
+    </div>
+      <br>
+  <div class="form-group">
+      <label class="col-form-label" for="inputDefault">Ingresar categoria<br><br></label>
+      <select name="category_selection" method="GET" action="/">
+          {% for categoria in categorias %}
+              <option value="{{categoria.nombre}}" SELECTED>{{categoria.nombre}}</option>"
+          {% endfor %}
+          <option value="nueva_categoria" SELECTED>Nueva Categoria</option>
+      </select>
+      <input type="text" name="category_input" class="form-control" placeholder="resource" id="inputDefault">
+    </div>
+    <br>
+
   <button type="submit">Submit</button><br><br><br><br><br>
 
 </form>

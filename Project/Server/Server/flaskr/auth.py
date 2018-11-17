@@ -89,7 +89,8 @@ def logout():
 
 @bp.route('/login_succesful')
 def login_succesful():
-    return render_template('user_page.html')
+    user = db.session.query(Usuario).filter(Usuario.username == session['user']).one()
+    return render_template('user_page.html', categorias=get_user_categories(user))
 
 
 
@@ -107,3 +108,7 @@ def create_group():
             db.session.add(Grupo(nombre=group_name, id_admin=6))
             db.session.commit()
     return render_template('create_group.html')
+
+
+def get_user_categories(user):
+    return db.session.query(Categoria).filter(Categoria.id_usuario == user.id_usuario).all()
