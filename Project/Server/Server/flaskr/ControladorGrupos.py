@@ -6,11 +6,11 @@ from base import db, Usuario
 from flask import session
 from base import *
 
-urlCrearGrupo = Blueprint('ControladorCrearGrupo', __name__, url_prefix='/ControladorCrearGrupo')
+urlGrupos = Blueprint('ControladorGrupos', __name__, url_prefix='/ControladorGrupos')
 
 
-@urlCrearGrupo.route('/crear_grupo', methods=('GET', 'POST'))
-def crear_grupo():
+@urlGrupos.route('/grupos', methods=('GET', 'POST'))
+def grupos():
     if request.method == 'POST':
         grupo = request.form['grupo']
 
@@ -34,7 +34,7 @@ def crear_grupo():
             db.session.commit()
             return redirect(url_for('auth.login_succesful'))
         flash(error)
-    return render_template('agregarGrupo.html')
+    return render_template('grupos.html',grupos = (db.session.query(Usuario).filter(Usuario.username == session['user']).one()).grupos)
 
 
 def get_user_categories(user):

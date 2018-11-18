@@ -52,6 +52,7 @@ class Grupo(db.Model):
     id_admin = db.Column(db.Integer, db.ForeignKey(Usuario.id_usuario), nullable=True)
     admin = db.relationship('Usuario',back_populates='misGrupos')
     usuarios = db.relationship('UsuarioXGrupo',back_populates='grupo')
+    comentarios = db.relationship('Comentario', back_populates='grupo')
 
     # Atributtes
 
@@ -87,6 +88,7 @@ class Comentario(db.Model):
     # Atributtes
     comentario = db.Column(db.String(80), unique=False, nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
+    grupo = db.relationship('Grupo', back_populates='comentarios')
 
 
 class Etiqueta(db.Model):
