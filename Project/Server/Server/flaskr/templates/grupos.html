@@ -15,11 +15,12 @@
 
         <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
     <h3>Mis Grupos</h3>
-    <ul></ul>
+    <select>
     {% for grupo in grupos %}
-        <li>{{ grupo.grupo.nombre }}</li>
+        <option>{{ grupo.grupo.nombre }}</option>
     {% endfor %}
-    </ul>
+    </select>
+<div id="response-participantes" ></div>
 </center>
 </body>
 </html>
