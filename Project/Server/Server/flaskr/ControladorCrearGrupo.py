@@ -2,7 +2,7 @@ from sqlalchemy.sql.expression import func
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
-from base import db, Usuario
+from base import db, Usuario,UsuarioXGrupo
 from flask import session
 from base import *
 
@@ -22,7 +22,12 @@ def crear_grupo():
         if error is None:
             user = db.session.query(Usuario).filter(Usuario.username == session['user']).one()
             grupo1 = Grupo(nombre=grupo, id_admin=user.id_usuario)
+            #agregar admin a la lista de usuarios
+
+
             db.session.add(grupo1)
+            db.session.flush()
+            db.session.add(UsuarioXGrupo(id_grupo=grupo1.id_grupo,id_usuario=user.id_usuario))
             #db.session.flush()
             #if db.session.query(Categoria.query.filter(Categoria.nombre == category).exists()).scalar():
                 #categoria = db.session.query(Categoria).filter(Categoria.nombre == category).one()
