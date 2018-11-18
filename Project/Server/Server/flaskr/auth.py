@@ -1,5 +1,5 @@
 from sqlalchemy.sql.expression import func
-from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
+from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for, json, jsonify)
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 from base import db, Usuario
@@ -109,9 +109,17 @@ def create_group():
 
 @bp.route('/get_group_data', methods=('GET', 'POST'))
 def get_group_data():
-    if request.method == 'POST':
-        group_name = request.form['group_name']
-    return render_template('create_group.html')
+    content = json.loads(request.data)
+    grupo = db.session.query(Grupo).filter(Grupo.id_grupo == int(content['data'])).one()
+    usuarios = db.session.query(UsuarioXGrupo).filter(UsuarioXGrupo.id_grupo == grupo.id_grupo)
+    comentarios = db.session.query(Comentario).filter(Comentario.id_grupo == grupo.id_grupo)
+    comments = []
+    participantes = []
+    for usuario in usuarios:
+        participantes.append(db.session.query(Usuario).filter(Usuario.id_usuario == usuario.id_usuario).one().username)
+    for comentario in comentarios:
+        comments.append(comentario)
+    return jsonify({'participantes': participantes, 'comentarios': comments})
 
 
 def get_user_categories(user):
