@@ -112,3 +112,5 @@ def create_group():
 
 def get_user_categories(user):
     return db.session.query(Categoria).filter(Categoria.id_usuario == user.id_usuario).all()
+
+
