@@ -18,6 +18,11 @@
     <input type="text" name="etiquetabuscar" placeholder="etiqueta">
     <button type="submit">Buscar</button>
 </form>
+    <ul>
+{% for recursos in recursosBuscados %}
+    <li>{{ recursos }}</li>
+{% endfor %}
+</ul>
     <a href="{{ url_for('main.home') }}">Back to Home Page</a>
 {% endwith %}
 </body>
