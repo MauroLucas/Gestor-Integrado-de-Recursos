@@ -107,5 +107,12 @@ def create_group():
     return render_template('create_group.html')
 
 
+@bp.route('/get_group_data', methods=('GET', 'POST'))
+def get_group_data():
+    if request.method == 'POST':
+        group_name = request.form['group_name']
+    return render_template('create_group.html')
+
+
 def get_user_categories(user):
     return db.session.query(Categoria).filter(Categoria.id_usuario == user.id_usuario).all()

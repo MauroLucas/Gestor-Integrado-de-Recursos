@@ -17,10 +17,27 @@
     <h3>Mis Grupos</h3>
     <select>
     {% for grupo in grupos %}
-        <option>{{ grupo.grupo.nombre }}</option>
+        <option class="group_name" value="{{ grupo.grupo.nombre }}">{{ grupo.grupo.nombre }}</option>
     {% endfor %}
     </select>
 <div id="response-participantes" ></div>
 </center>
 </body>
 </html>
+<script>
+    $(document).ready(function(){
+        var clicked;
+        $(".group_name").click(function(){
+            clicked = $(this).attr("value");
+            $.ajax({
+                type : 'POST',
+                url : "{{url_for('auth.get_group_data')}}",
+                contentType: 'application/json;charset=UTF-8',
+                data : {'data':clicked}
+            });
+            success: function(response) {
+                console.log(response);
+            }
+        });
+    });
+</script>
