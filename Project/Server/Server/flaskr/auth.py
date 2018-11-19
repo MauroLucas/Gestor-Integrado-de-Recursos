@@ -138,7 +138,9 @@ def get_group_comment():
         comments.append(comentario.comentario)
         fecha.append(comentario.fecha)
         usuario.append(comentario.categoria.usuario.username)
-    return jsonify({'comments': comments, 'fecha':fecha,'usuario':usuario})
+
+
+    return jsonify({'comments': comments,'fecha': fecha,'usuario': usuario})
 
 
 

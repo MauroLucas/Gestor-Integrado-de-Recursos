@@ -23,7 +23,8 @@
     {% endfor %}
     </select>
 <div id="response-participantes" ></div>
-<div id="response-comentarios" ></div>
+
+<table id="response-comentarios" ></table>
 </center>
 </body>
 </html>
@@ -50,27 +51,39 @@
     });
 </script>
 
-{#<script>#}
-{#    $(document).ready(function(){#}
-{#        var clicked;#}
-{#        $("#group_name").change(function(){#}
-{#            clicked = $(this).prop("value");#}
-{#            $.ajax({#}
-{#                type : 'POST',#}
-{#                url : "{{url_for('auth.get_group_comment')}}",#}
-{#                contentType: 'application/json;charset=UTF-8',#}
-{#                data : '{"data":"'+clicked+'"}',#}
-{#                success: function(response){#}
-{#                    console.log(response);#}
-{#                    var i = 0;#}
-{#                    $("#response-comentarios").empty();#}
-{#                    for(i=0;i<response.comments.length;i++){#}
-{#                        $("#response-comentarios").append("<h3>"+response.comments[i].fecha+"</h3>");#}
-{#                    }#}
-{#                }#}
-{#            });#}
-{#        });#}
-{#    });#}
-{#</script>#}
+<script>
+    $(document).ready(function(){
+        var clicked;
+        $("#group_name").change(function(){
+            clicked = $(this).prop("value");
+            $.ajax({
+                type : 'POST',
+                url : "{{url_for('auth.get_group_comment')}}",
+                contentType: 'application/json;charset=UTF-8',
+                data : '{"data":"'+clicked+'"}',
+                success: function(response){
+                    console.log(response);
+                    var i = 0;
+                    $("#response-comentarios").empty();
+                    $("#response-comentarios").append("<tr>" + "<th>" + "Comentario" + "</th>" + "<th>" + "Usuario" + "</th>" + "</th>" + "<th>" + "Fecha" + "</th>" + "</tr>")
+
+                    for(i=0;i<response.comments.length;i++){
+
+                        $("#response-comentarios").append(
+
+
+                            "<tr>" + "<th>" + response.comments[i] + "</th>"
+                            + "<th>" + response.usuario[i] + "</th>" 
+                            + "<th>" + response.fecha[i] + "</th>" + "</tr>"
+
+                            );
+
+
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 
