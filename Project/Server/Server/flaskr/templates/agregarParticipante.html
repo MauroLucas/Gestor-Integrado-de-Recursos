@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1><center>Intefaz ingresar recurso</center></h1>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+<form method="post">
+  <center>
+  <br>
+  <div class="form-group">
+      <label class="col-form-label" for="inputDefault">Ingrese Nombre del Participante<br><br></label>
+      <input type="text" name="participante" class="form-control" placeholder="participante" id="inputDefault">
+    </div>
+    <br>
+
+
+    <br>
+
+    </div>
+      <br>
+  <div class="form-group">
+
+      <select name="grupo" method="GET" action="/">
+          {% for grupo in grupos %}
+              <option value="{{grupo.grupo.nombre}}" SELECTED>{{grupo.grupo.nombre}}</option>"
+          {% endfor %}
+
+      </select>
+
+    </div>
+    <br>
+
+  <button type="submit">Submit</button><br><br><br><br><br>
+
+</form>
+
+    <a href="{{ url_for('auth.login_succesful') }}">Back to Login Page/LOGUOT</a>
+{% endwith %}
+ </center>
+</body>
+</html>
