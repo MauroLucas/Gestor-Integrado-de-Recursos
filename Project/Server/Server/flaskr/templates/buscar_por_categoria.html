@@ -1,0 +1,38 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Buscar por categoria</p>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+<form method="post">
+    <input type="text" name="categoriabuscar" placeholder="categoria">
+    <button type="submit">Buscar</button>
+</form>
+    <ul>
+{% for recursos in recursosBuscadosCat %}
+    <li>{{ recursos }}</li>
+{% endfor %}
+    </ul>
+    <a href="{{ url_for('main.home') }}">Back to Home Page</a>
+{% endwith %}
+
+    <h3>Mis Categorias</h3>
+    <select id="cat_name">
+    {% for categoria in categorias %}
+        <option value="{{ categoria.categoria.id_categoria }}">{{ categoria.categoria.nombre }}</option>
+    {% endfor %}
+    </select>
+<div id="response-categorias" ></div>
+</body>
+</html>
