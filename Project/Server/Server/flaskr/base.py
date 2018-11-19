@@ -76,6 +76,14 @@ class UsuarioXGrupo(db.Model):
     usuario = db.relationship("Usuario", back_populates='grupos')
 
 
+class RecursoXComentario(db.Model):
+    __tablename__ = 'recursoxcomentario'
+    # Primary key
+    idrecursoxcomentario = db.Column(db.Integer, primary_key=True)
+
+   #  Foreign key
+    id_comentario = db.Column(db.Integer, db.ForeignKey('Comentario.id_comentario'), nullable=True)
+    id_recurso = db.Column(db.Integer, db.ForeignKey('Recurso.id_recurso'), nullable=True)
 
 
 
