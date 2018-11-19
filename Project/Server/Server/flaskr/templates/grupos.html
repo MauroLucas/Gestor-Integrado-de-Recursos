@@ -17,11 +17,14 @@
         <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
     <h3>Mis Grupos</h3>
     <select id="group_name">
-    {% for grupo in grupos %}
+    <option values="0">Selecciona Grupo</option>
+        {% for grupo in grupos %}
         <option value="{{ grupo.grupo.id_grupo }}">{{ grupo.grupo.nombre }}</option>
     {% endfor %}
     </select>
 <div id="response-participantes" ></div>
+
+<table id="response-comentarios" ></table>
 </center>
 </body>
 </html>
@@ -47,3 +50,40 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function(){
+        var clicked;
+        $("#group_name").change(function(){
+            clicked = $(this).prop("value");
+            $.ajax({
+                type : 'POST',
+                url : "{{url_for('auth.get_group_comment')}}",
+                contentType: 'application/json;charset=UTF-8',
+                data : '{"data":"'+clicked+'"}',
+                success: function(response){
+                    console.log(response);
+                    var i = 0;
+                    $("#response-comentarios").empty();
+                    $("#response-comentarios").append("<tr>" + "<th>" + "Comentario" + "</th>" + "<th>" + "Usuario" + "</th>" + "</th>" + "<th>" + "Fecha" + "</th>" + "</tr>")
+
+                    for(i=0;i<response.comments.length;i++){
+
+                        $("#response-comentarios").append(
+
+
+                            "<tr>" + "<th>" + response.comments[i] + "</th>"
+                            + "<th>" + response.usuario[i] + "</th>" 
+                            + "<th>" + response.fecha[i] + "</th>" + "</tr>"
+
+                            );
+
+
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+

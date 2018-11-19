@@ -111,15 +111,37 @@ def create_group():
 def get_group_data():
     content = json.loads(request.data)
     grupo = db.session.query(Grupo).filter(Grupo.id_grupo == int(content['data'])).one()
-    usuarios = db.session.query(UsuarioXGrupo).filter(UsuarioXGrupo.id_grupo == grupo.id_grupo)
-    comentarios = db.session.query(Comentario).filter(Comentario.id_grupo == grupo.id_grupo)
+    usuarios = grupo.usuarios
+    #comentarios = db.session.query(Comentario).filter(Comentario.id_grupo == grupo.id_grupo)
     comments = []
     participantes = []
     for usuario in usuarios:
-        participantes.append(db.session.query(Usuario).filter(Usuario.id_usuario == usuario.id_usuario).one().username)
+        participantes.append(usuario.usuario.username)
+
+    #for comentario in comentarios:
+        #comments.append(comentario)
+    return jsonify({'participantes': participantes})
+
+
+@bp.route('/get_group_comment', methods=('GET', 'POST'))
+def get_group_comment():
+    content = json.loads(request.data)
+    grupo = db.session.query(Grupo).filter(Grupo.id_grupo == int(content['data'])).one()
+    usuarios = grupo.usuarios
+    comentarios = grupo.comentarios
+    comments = []
+    fecha = []
+    usuario = []
+
+
     for comentario in comentarios:
-        comments.append(comentario)
-    return jsonify({'participantes': participantes, 'comentarios': comments})
+        comments.append(comentario.comentario)
+        fecha.append(comentario.fecha)
+        usuario.append(comentario.categoria.usuario.username)
+
+
+    return jsonify({'comments': comments,'fecha': fecha,'usuario': usuario})
+
 
 
 def get_user_categories(user):
