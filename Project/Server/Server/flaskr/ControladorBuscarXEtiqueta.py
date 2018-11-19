@@ -14,11 +14,23 @@ urlBuscarXEtiqueta = Blueprint('ControladorBuscarXEtiqueta', __name__, url_prefi
 def buscar_etiqueta():
     if request.method == 'POST':
         etiqueta = request.form['etiquetabuscar']
+        user = session["user"]
+        recursosEnEtiqueta = []
         error = None
         if not etiqueta:
             error = 'Inserte etiqueta'
         if error is None:
-            if db.session.query(Etiqueta.query.filter (Etiqueta.nombre == etiqueta).exists ()).scalar ():
-                print 'hola'
+            if db.session.query(Etiqueta.query.filter(Etiqueta.nombre == etiqueta).exists()).scalar():
+                usuario = db.session.query(Usuario).filter(Usuario.username == user).one()
+                etiqueta1 = db.session.query(Etiqueta).filter(Etiqueta.nombre == etiqueta).one()
+
+                for categoria in usuario.categorias:
+                    for recurso in categoria.recursos:
+                        for etiqueta in recurso.recurso.etiquetas:
+                            if etiqueta.etiqueta.id_etiqueta == etiqueta1.id_etiqueta:
+                                recursosEnEtiqueta.append(recurso.recurso.recurso)
+                return render_template('buscar_por_etiqueta.html', recursosBuscados=recursosEnEtiqueta)
         flash (error)
     return render_template ('buscar_por_etiqueta.html')
+
+

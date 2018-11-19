@@ -5,6 +5,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flaskr.base import *
 urlLogin = Blueprint('ControladorLogin', __name__, url_prefix='/ControladorLogin')
 #
+
+
 @urlLogin.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':

@@ -25,7 +25,7 @@ def register():
         elif db.session.query(Usuario.query.filter(Usuario.username == username).exists()).scalar():
             error = 'User {} is already registered.'.format(username)
         if error is None:
-            db.session.add(Usuario( username=username, password=password,nombre=nombre,apellido=apellido,mail=mail))
+            db.session.add(Usuario(username=username, password=password, nombre=nombre, apellido=apellido, mail=mail))
             db.session.commit()
             return redirect(url_for('auth.register_succesful'))
         flash(error)
