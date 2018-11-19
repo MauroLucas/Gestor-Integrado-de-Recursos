@@ -13,7 +13,9 @@
     <br><br>
 
 
-<a href="{{ url_for('ControladorLogin.login') }}" class="btn btn-outline-primary">Crear Grupo</a>
+<a href="{{ url_for('ControladorCrearGrupo.crear_grupo') }}" class="btn btn-outline-primary">Crear Grupo</a>
+<a href="{{ url_for('ControladorGrupos.grupos') }}" class="btn btn-outline-primary">Mis grupos</a>
+
 
         <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
     <h3>Mis Categorias</h3>
@@ -24,6 +26,8 @@
     </ul>
  <br><br>
 <a href="{{ url_for('ControladorBuscarXEtiqueta.buscar_etiqueta') }}" class="btn btn-outline-primary">Buscar por etiqueta</a>
+<br><br>
+<a href="{{ url_for('ControladorBuscarXCategoria.buscar_categoria') }}" class="btn btn-outline-primary">Buscar por categoria</a>
 </center>
 </body>
 </html>

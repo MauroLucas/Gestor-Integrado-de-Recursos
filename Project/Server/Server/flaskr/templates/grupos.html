@@ -1,3 +1,4 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,11 +16,34 @@
 
         <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
     <h3>Mis Grupos</h3>
-    <ul></ul>
+    <select id="group_name">
     {% for grupo in grupos %}
-        <li>{{ grupo.grupo.nombre }}</li>
+        <option value="{{ grupo.grupo.id_grupo }}">{{ grupo.grupo.nombre }}</option>
     {% endfor %}
-    </ul>
+    </select>
+<div id="response-participantes" ></div>
 </center>
 </body>
 </html>
+<script>
+    $(document).ready(function(){
+        var clicked;
+        $("#group_name").change(function(){
+            clicked = $(this).prop("value");
+            $.ajax({
+                type : 'POST',
+                url : "{{url_for('auth.get_group_data')}}",
+                contentType: 'application/json;charset=UTF-8',
+                data : '{"data":"'+clicked+'"}',
+                success: function(response){
+                    console.log(response);
+                    var i = 0;
+                    $("#response-participantes").empty();
+                    for(i=0;i<response.participantes.length;i++){
+                        $("#response-participantes").append("<h3>"+response.participantes[i]+"</h3>");
+                    }
+                }
+            });
+        });
+    });
+</script>

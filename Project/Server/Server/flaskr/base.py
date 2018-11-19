@@ -52,6 +52,7 @@ class Grupo(db.Model):
     id_admin = db.Column(db.Integer, db.ForeignKey(Usuario.id_usuario), nullable=True)
     admin = db.relationship('Usuario',back_populates='misGrupos')
     usuarios = db.relationship('UsuarioXGrupo',back_populates='grupo')
+    comentarios = db.relationship('Comentario', back_populates='grupo')
 
     # Atributtes
 
@@ -75,8 +76,16 @@ class UsuarioXGrupo(db.Model):
     usuario = db.relationship("Usuario", back_populates='grupos')
 
 
+class RecursoXComentario(db.Model):
+    __tablename__ = 'recursoxcomentario'
+    # Primary key
+    idrecursoxcomentario = db.Column(db.Integer, primary_key=True)
 
-
+   #  Foreign key
+    id_comentario = db.Column(db.Integer, db.ForeignKey('Comentario.id_comentario'), nullable=True)
+    id_recurso = db.Column(db.Integer, db.ForeignKey('Recurso.id_recurso'), nullable=True)
+    comentario = db.relationship("Comentario", back_populates='recursos')
+    recurso = db.relationship("Recurso")
 
 class Comentario(db.Model):
     __tablename__ = 'Comentario'
@@ -84,9 +93,13 @@ class Comentario(db.Model):
     id_comentario = db.Column(db.Integer, primary_key=True)
     # Foreign key
     id_grupo = db.Column(db.Integer, db.ForeignKey(Grupo.id_grupo), nullable=True)
+    id_categoria = db.Column(db.Integer, db.ForeignKey('Categoria.id_categoria'), nullable=True)
     # Atributtes
     comentario = db.Column(db.String(80), unique=False, nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
+    grupo = db.relationship('Grupo', back_populates='comentarios')
+    recursos = db.relationship('RecursoXComentario',back_populates='comentario')
+    categoria = db.relationship('Categoria')
 
 
 class Etiqueta(db.Model):
@@ -148,6 +161,7 @@ class Categoria(db.Model):
 
     # Relationship
     id_categorias_ = db.relationship('CategoriaXRecurso')
+
     # Atributtes
     nombre = db.Column(db.String(80), unique=False, nullable=False)
     recursos = db.relationship('CategoriaXRecurso',back_populates='categoria')
