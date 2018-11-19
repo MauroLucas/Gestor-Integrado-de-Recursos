@@ -28,11 +28,33 @@
 {% endwith %}
 
     <h3>Mis Categorias</h3>
-    <select id="cat_name">
+    <select id="category_name">
     {% for categoria in categorias %}
-        <option value="{{ categoria.categoria.id_categoria }}">{{ categoria.categoria.nombre }}</option>
+        <option value="{{ categoria.categoria.id_categoria}}">{{ categoria.categoria.nombre }}</option>
     {% endfor %}
     </select>
 <div id="response-categorias" ></div>
 </body>
 </html>
+<script>
+    $(document).ready(function(){
+        var clicked;
+        $("#category_name").change(function(){
+            clicked = $(this).prop("value");
+            $.ajax({
+                type : 'POST',
+                url : "{{url_for('auth.get_rec_categoria')}}",
+                contentType: 'application/json;charset=UTF-8',
+                data : '{"data":"'+clicked+'"}',
+                success: function(response){
+                    console.log(response);
+                    var i = 0;
+                    $("#response-contenido").empty();
+                    for(i=0;i<response.contenido.length;i++){
+                        $("#response-contenido").append("<h3>"+response.contenido[i]+"</h3>");
+                    }
+                }
+            });
+        });
+    });
+</script>

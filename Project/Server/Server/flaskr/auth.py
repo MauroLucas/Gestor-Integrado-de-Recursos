@@ -126,3 +126,12 @@ def get_user_categories(user):
     return db.session.query(Categoria).filter(Categoria.id_usuario == user.id_usuario).all()
 
 
+@bp.route('/get_rec_categoria', methods=('GET', 'POST'))
+def get_rec_categoria():
+    content = json.loads(request.data)
+    categoria = db.session.query(Categoria).filter(Categoria.id_categoria == int(content['data'])).one()
+    recursos = db.session.query(CategoriaXRecurso).filter(CategoriaXRecurso.id_categoria == categoria.id_categoria)
+    contenido = []
+    for recurso in recursos:
+        contenido.append(db.session.query(Recurso).filter(Recurso.id_recurso == recurso.id_recurso).one().recurso)
+    return jsonify({'contenido': contenido})
