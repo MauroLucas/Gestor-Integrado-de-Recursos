@@ -17,11 +17,13 @@
         <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
     <h3>Mis Grupos</h3>
     <select id="group_name">
-    {% for grupo in grupos %}
+    <option values="0">Selecciona Grupo</option>
+        {% for grupo in grupos %}
         <option value="{{ grupo.grupo.id_grupo }}">{{ grupo.grupo.nombre }}</option>
     {% endfor %}
     </select>
 <div id="response-participantes" ></div>
+<div id="response-comentarios" ></div>
 </center>
 </body>
 </html>
@@ -47,3 +49,28 @@
         });
     });
 </script>
+
+{#<script>#}
+{#    $(document).ready(function(){#}
+{#        var clicked;#}
+{#        $("#group_name").change(function(){#}
+{#            clicked = $(this).prop("value");#}
+{#            $.ajax({#}
+{#                type : 'POST',#}
+{#                url : "{{url_for('auth.get_group_comment')}}",#}
+{#                contentType: 'application/json;charset=UTF-8',#}
+{#                data : '{"data":"'+clicked+'"}',#}
+{#                success: function(response){#}
+{#                    console.log(response);#}
+{#                    var i = 0;#}
+{#                    $("#response-comentarios").empty();#}
+{#                    for(i=0;i<response.comments.length;i++){#}
+{#                        $("#response-comentarios").append("<h3>"+response.comments[i].fecha+"</h3>");#}
+{#                    }#}
+{#                }#}
+{#            });#}
+{#        });#}
+{#    });#}
+{#</script>#}
+
+

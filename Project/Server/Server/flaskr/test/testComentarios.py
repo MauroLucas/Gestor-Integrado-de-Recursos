@@ -7,3 +7,4 @@ grupo = db.session.query(Grupo).filter(Grupo.nombre=='grupo1').one()
 
 for comentario in grupo.comentarios:
     print comentario.comentario
+    print comentario.categoria.usuario.username
