@@ -146,3 +146,5 @@ def get_group_comment():
 
 def get_user_categories(user):
     return db.session.query(Categoria).filter(Categoria.id_usuario == user.id_usuario).all()
+
+
