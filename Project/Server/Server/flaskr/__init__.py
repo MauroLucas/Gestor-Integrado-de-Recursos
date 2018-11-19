@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, Blueprint, session, url_for, redirect
 from . import auth
 from . import ControladorLogin,ControladorRegistrarUsuario,\
-    ControladorAgregarRecurso,ControladorEditUsuario,ControladorCrearGrupo,ControladorGrupos
+    ControladorAgregarRecurso,ControladorEditUsuario,ControladorCrearGrupo,ControladorGrupos,ControladorAgregarParticipante
 from flask_sqlalchemy import SQLAlchemy
 
 bp = Blueprint('main', __name__, url_prefix='/')
@@ -49,6 +49,7 @@ def create_app(test_config=None):
     app.register_blueprint(ControladorEditUsuario.urlEditUsuario)
     app.register_blueprint(ControladorCrearGrupo.urlCrearGrupo)
     app.register_blueprint(ControladorGrupos.urlGrupos)
+    app.register_blueprint(ControladorAgregarParticipante.urlAgregarParticipante)
 
 
     return app
