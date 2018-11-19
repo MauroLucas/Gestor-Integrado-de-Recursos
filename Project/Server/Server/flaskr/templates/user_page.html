@@ -18,16 +18,10 @@
 
 
         <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
-    <h3>Mis Categorias</h3>
-    <ul></ul>
-    {% for categoria in categorias %}
-        <li>{{ categoria.nombre }}</li>
-    {% endfor %}
-    </ul>
+
  <br><br>
-<a href="{{ url_for('ControladorBuscarXEtiqueta.buscar_etiqueta') }}" class="btn btn-outline-primary">Buscar por etiqueta</a>
-<br><br>
-<a href="{{ url_for('ControladorBuscarXCategoria.buscar_categoria') }}" class="btn btn-outline-primary">Buscar por categoria</a>
+
+<a href="{{ url_for('ControladorCategorias.mis_categorias') }}" class="btn btn-outline-primary">MisCategorias</a>
 </center>
 </body>
 </html>

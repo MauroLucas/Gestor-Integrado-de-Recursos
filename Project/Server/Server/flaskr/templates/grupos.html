@@ -15,7 +15,8 @@
 
 
         <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-primary">logout</a>
-    <h3>Mis Grupos</h3>
+<a href="{{ url_for('ControladorAgregarParticipante.agregar_participante') }}" class="btn btn-outline-primary">Agregar participante</a>
+<h3>Mis Grupos</h3>
     <select id="group_name">
     <option values="0">Selecciona Grupo</option>
         {% for grupo in grupos %}
