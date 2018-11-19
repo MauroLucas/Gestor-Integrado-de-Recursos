@@ -13,6 +13,7 @@ urlBuscarXCategoria = Blueprint('ControladorBuscarXCategoria', __name__, url_pre
 @urlBuscarXCategoria.route('/buscar_categoria', methods=('GET', 'POST'))
 def buscar_categoria():
     if request.method == 'POST':
+        user = db.session.query (Usuario).filter (Usuario.username == session['user']).one ()
         categoria = request.form['categoriabuscar'] #CATEGORIASELECCIONADA
         recursosEnCategoria = []
         error = None
@@ -24,4 +25,4 @@ def buscar_categoria():
                     recursosEnCategoria.append(cate.recurso.recurso)
             return render_template('buscar_por_categoria.html', recursosBuscadosCat=recursosEnCategoria)
         flash (error)
-    return render_template ('buscar_por_categoria.html')
+    return render_template('buscar_por_categoria.html')
